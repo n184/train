@@ -1,0 +1,24 @@
+body {
+    background: url("images/tube_map.gif");
+}
+
+button {
+    background: black;
+}
+
+form {
+    margin: 5%;
+}
+
+
+#first-panel,
+#second-panel,
+.jumbotron {
+    text-align: center;
+    background: #d0e1e1;
+}
+
+#submit {
+    background: #5a8c8c;
+    color: white;
+}
