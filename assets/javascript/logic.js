@@ -14,7 +14,8 @@
   var destination = "";
   var time = 0;
   var frequency = 0;
-  var firstTime = ""
+  var firstTime = 0;
+  var nextTrain = 0;
 
   $("#submit").on("click", function(event) {
       event.preventDefault();
@@ -39,7 +40,7 @@
   //$("#awayDisplay").text(tMinutesTillTrain);
   //$("#nextDisplay").text(moment(nextTrain).format("hh:mm"));
 
-  dataRef.ref().on("child_added", function(childSnapshot, prevChildkey) {
+  dataRef.ref().on("child_added", function(childSnapshot) {
 
       var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
       console.log(firstTimeConverted);
@@ -61,7 +62,7 @@
       console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
       // Next Train
-      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      nextTrain = moment().add(tMinutesTillTrain, "minutes");
       console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
       nextTrain = moment(nextTrain).format("hh:mm");
 
@@ -88,7 +89,7 @@
   }, function(errorObject) {
       console.log("Errors handled: " + errorObject.code);
   });
-
+/*
   dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
 
       // Change the HTML to reflect
@@ -98,4 +99,6 @@
       //$("#nextDisplay").text(snapshot.val().frequency);
       $("#nextDisplay").text(snapshot.val().nextTrain);
       $("#awayDisplay").text(snapshot.val().tMinutesTillTrain);
+
   });
+  */
