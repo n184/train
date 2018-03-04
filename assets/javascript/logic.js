@@ -61,8 +61,6 @@ $("#submit").on("click", function(event) {
 
         firstTime: firstTime,
 
-        nextTrain: nextTrain,
-
         dateAdded: firebase.database.ServerValue.TIMESTAMP
 
     });
@@ -75,10 +73,10 @@ $("#submit").on("click", function(event) {
 
 
 dataRef.ref().on("child_added", function(childSnapshot) {
+console.log(childSnapshot.val().frequency, "-------------------frequency");
 
 
-
-    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    var firstTimeConverted = moment(childSnapshot.val().firstTime, "HH:mm").subtract(1, "years");
 
     console.log(firstTimeConverted);
 
@@ -102,7 +100,7 @@ dataRef.ref().on("child_added", function(childSnapshot) {
 
     // Time apart (remainder)
 
-    var tRemainder = diffTime % frequency;
+    var tRemainder = diffTime % childSnapshot.val().frequency;
 
     console.log(tRemainder);
 
@@ -110,9 +108,10 @@ dataRef.ref().on("child_added", function(childSnapshot) {
 
     // Minute Until Train
 
-    var tMinutesTillTrain = frequency - tRemainder;
+    var tMinutesTillTrain = childSnapshot.val().frequency - tRemainder;
 
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+    //console.log(JSON.stringify(tMinutesTillTrain));
 
 
 
@@ -123,7 +122,6 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
     nextTrain = moment(nextTrain).format("hh:mm");
-
 
 
     var tableRow = $("<tr>");
@@ -148,7 +146,7 @@ dataRef.ref().on("child_added", function(childSnapshot) {
 
     console.log(childSnapshot.val().frequency);
 
-    console.log(childSnapshot.val().nextTrain);
+    console.log(nextTrain);
 
 
 
@@ -167,3 +165,6 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     console.log("Errors handled: " + errorObject.code);
 
 });
+
+
+
